@@ -20,6 +20,23 @@
             android:name=".SeriesScreen"
             android:label="series"
             android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".ExerciseActivity"
+            android:label="exercise"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".ExerciseInformationActivity"
+            android:label="exercise"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".AddSerieActivity"
+            android:label="exercise"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".AddExerciseActivity"
+            android:label="exercise"
+            android:theme="@style/AppTheme"/>
+
     </application>
 
 </manifest>
