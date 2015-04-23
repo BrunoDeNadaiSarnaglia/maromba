@@ -86,6 +86,5 @@ public class SeriesScreen extends Activity {
         final int result = 1;
         AddSerieScreen.putExtra("username", email);
         startActivityForResult(AddSerieScreen, result);
-
     }
 }

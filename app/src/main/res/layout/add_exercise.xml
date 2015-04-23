@@ -5,6 +5,14 @@
     android:gravity="center|top"
     android:background="@drawable/hullk">
 
+
+    <EditText android:id="@+id/name_exercise" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="name"
+        android:paddingTop="40dp"
+        android:maxLines="1"
+        android:singleLine="true" />
+
     <EditText android:id="@+id/repeat_amount" android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Repeats"

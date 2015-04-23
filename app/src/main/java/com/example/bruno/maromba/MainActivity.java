@@ -1,6 +1,7 @@
 package com.example.bruno.maromba;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +11,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.bruno.maromba.databaseQueries.db;
 import com.example.bruno.maromba.loginChecker.CheckEmailPasswordCombination;
 import com.example.bruno.maromba.loginChecker.EmailAndPasswordValidator;
 
@@ -18,7 +20,7 @@ public class MainActivity extends ActionBarActivity {
 
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-
+    db db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,8 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
-
+        db = new db(this);
+        SQLiteDatabase sqLiteDatabase = db.getWritableDatabase();
     }
 
 
