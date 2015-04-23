@@ -37,6 +37,11 @@ public class AddExerciseActivity extends Activity {
         serie = intent.getExtras().getString("serie");
     }
 
+
+    /**
+     * When trying trying to add. It will create a contentValues and will insert the values
+     * @param view
+     */
     public void addExerciseToDatabase(View view) {
         EditText editText = (EditText) findViewById(R.id.repeat_amount);
         EditText editText1 = (EditText) findViewById(R.id.times_amount);
@@ -56,6 +61,7 @@ public class AddExerciseActivity extends Activity {
         try {
             Long id = sqLiteDatabase.insert("exercises", null, contentValues);
             Toast.makeText(this, id.toString(), Toast.LENGTH_LONG).show();
+            //id is the number of the row which these values were inserted. If something went wrong, it returns -1
             if(id == -1){
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
             }

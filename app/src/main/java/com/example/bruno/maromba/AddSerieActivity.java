@@ -39,6 +39,10 @@ public class AddSerieActivity extends Activity {
     }
 
 
+    /**
+     * When trying trying to add. It will create a contentValues and will insert the values
+     * @param view
+     */
     public void addSerieToDatabase(View view) {
         EditText editText = (EditText) findViewById(R.id.serie_name);
         String serieName = editText.getText().toString();
@@ -48,6 +52,7 @@ public class AddSerieActivity extends Activity {
         System.out.println("deu certo!\n" );
         try {
             Long id = sqLiteDatabase.insert("series", null, contentValues);
+            //id is the number of the row which these values were inserted. If something went wrong, it returns -1
             Toast.makeText(this, id.toString(), Toast.LENGTH_LONG).show();
             if(id == -1){
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
