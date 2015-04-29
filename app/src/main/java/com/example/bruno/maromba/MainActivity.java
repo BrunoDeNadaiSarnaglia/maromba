@@ -1,5 +1,6 @@
 package com.example.bruno.maromba;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
@@ -11,7 +12,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.bruno.maromba.databaseQueries.db;
+import com.example.bruno.maromba.databaseQueries.DatabaseHelper;
 import com.example.bruno.maromba.loginChecker.CheckEmailPasswordCombination;
 import com.example.bruno.maromba.loginChecker.EmailAndPasswordValidator;
 
@@ -20,16 +21,16 @@ public class MainActivity extends ActionBarActivity {
 
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    db db;
-
+    DatabaseHelper databaseHelper;
+    SQLiteDatabase sqLiteDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
-        db = new db(this);
-        SQLiteDatabase sqLiteDatabase = db.getWritableDatabase();
+        databaseHelper = new DatabaseHelper(this);
+        sqLiteDatabase = databaseHelper.getWritableDatabase();
     }
 
 
@@ -78,5 +79,21 @@ public class MainActivity extends ActionBarActivity {
         final int result = 1;
         seriesScreen.putExtra("username", email);
         startActivityForResult(seriesScreen, result);
+    }
+
+    public void signUp(View view){
+        EditText editTextEmail = (EditText) findViewById(R.id.email);
+        EditText editTextPassword = (EditText) findViewById(R.id.password);
+        String email = editTextEmail.getText().toString();
+        String password = editTextPassword.getText().toString();
+        if(!EmailAndPasswordValidator.check(email, password)){
+            Toast.makeText(this, "Invalid Email or Password", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("email", email);
+        contentValues.put("password", password);
+        Long id = sqLiteDatabase.insert("login", null, contentValues);
+        Toast.makeText(this, id.toString(), Toast.LENGTH_LONG).show();
     }
 }

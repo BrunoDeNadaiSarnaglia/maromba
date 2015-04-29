@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.bruno.maromba.databaseQueries.db;
+import com.example.bruno.maromba.databaseQueries.DatabaseHelper;
 
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +30,7 @@ public class AddExerciseActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_exercise);
-        db database = new db(this);
+        DatabaseHelper database = new DatabaseHelper(this);
         sqLiteDatabase = database.getWritableDatabase();
         Intent intent = getIntent();
         email = intent.getExtras().getString("username");

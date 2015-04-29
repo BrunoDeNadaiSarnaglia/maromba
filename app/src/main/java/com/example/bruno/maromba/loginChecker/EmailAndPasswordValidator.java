@@ -12,7 +12,7 @@ public class EmailAndPasswordValidator {
      * @param password password used to access account
      * @return true if both are correct otherwise false
      */
-    public boolean check(String email, String password){
+    public static boolean check(String email, String password){
         return validEmail(email) && validPassword(password);
     }
 
@@ -21,7 +21,7 @@ public class EmailAndPasswordValidator {
      * @param email email used to access account
      * @return true if email is, valid otherwise false
      */
-    private boolean validEmail(String email) {
+    private static boolean validEmail(String email) {
         if(email == null)
             return false;
         if(!email.contains("@")){
@@ -35,7 +35,7 @@ public class EmailAndPasswordValidator {
      * @param password password used to access account
      * @return true if password is valid, otherwise false
      */
-    private boolean validPassword(String password) {
+    private static boolean validPassword(String password) {
         if(password == null)
             return false;
         if(password.length() < 6){
