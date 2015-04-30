@@ -11,10 +11,10 @@ import java.util.ArrayList;
 public class QueryDatabaseForPassword {
 
     /**
-     * Function mocking the search on the database
+     * query the database and return the password for given email or the null if doesn't exists
      * @param email
-     * @param sqLiteDatabase
-     * @return
+     * @param sqLiteDatabase database
+     * @return String with the password
      */
 
     public String getPassword(String email, SQLiteDatabase sqLiteDatabase){
@@ -22,8 +22,6 @@ public class QueryDatabaseForPassword {
         while(cursor.moveToNext()){
             return cursor.getString(0);
         }
-//        if(email.equals("a@b"))
-//            return "123456";
         return null;
     }
 }

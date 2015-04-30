@@ -69,7 +69,6 @@ public class AddExerciseActivity extends Activity {
         contentValues.put("weight", weight);
         try {
             Long id = sqLiteDatabase.insert("exercises", null, contentValues);
-            //id is the number of the row which these values were inserted. If something went wrong, it returns -1
             if(id == -1){
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
@@ -77,11 +76,6 @@ public class AddExerciseActivity extends Activity {
             e.printStackTrace();
             Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
         }
-//        Intent ExerciseScreen = new Intent(AddExerciseActivity.this, ExerciseActivity.class);
-//        final int result = 1;
-//        ExerciseScreen.putExtra("username", email);
-//        ExerciseScreen.putExtra("serie", serie);
-//        startActivityForResult(ExerciseScreen, result);
         this.finish();
     }
 }

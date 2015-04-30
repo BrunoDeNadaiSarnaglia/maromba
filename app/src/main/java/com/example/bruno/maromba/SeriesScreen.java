@@ -38,51 +38,20 @@ public class SeriesScreen extends Activity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.series_layout);
-        DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        sqLiteDatabase = databaseHelper.getWritableDatabase();
-
-        //load data from the previous activity
-        Intent intent = getIntent();
-        email = intent.getExtras().getString("username");
-
-        List<String> seriesNames = seriesQuery.getSeriesNames(email, sqLiteDatabase);
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, seriesNames);
-
-        ListView theListView = (ListView) findViewById(R.id.theListView);
-
-        theListView.setAdapter(arrayAdapter);
-
-        theListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
-            /**
-             * pop up a new activity based on the list view clicked
-             * it will show the exercises of the serie choosed
-             * @param parent
-             * @param view
-             * @param position
-             * @param id
-             */
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String picked = String.valueOf(parent.getItemAtPosition(position));
-//                Toast.makeText(SeriesScreen.this, picked, Toast.LENGTH_SHORT).show();
-                Intent ExerciseScreen = new Intent(SeriesScreen.this, ExerciseActivity.class);
-                final int result = 1;
-                ExerciseScreen.putExtra("username", email);
-                ExerciseScreen.putExtra("serie", picked);
-                startActivityForResult(ExerciseScreen, result);
-            }
-        });
-
-        TextView emailTextView = (TextView) findViewById(R.id.email_text_view);
-        emailTextView.setText(email);
+        create();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        create();
+    }
+
+    /**
+     * function created to refactor onRestart and onCreate
+     */
+
+    protected void create(){
         setContentView(R.layout.series_layout);
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         sqLiteDatabase = databaseHelper.getWritableDatabase();
@@ -112,7 +81,6 @@ public class SeriesScreen extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String picked = String.valueOf(parent.getItemAtPosition(position));
-//                Toast.makeText(SeriesScreen.this, picked, Toast.LENGTH_SHORT).show();
                 Intent ExerciseScreen = new Intent(SeriesScreen.this, ExerciseActivity.class);
                 final int result = 1;
                 ExerciseScreen.putExtra("username", email);
@@ -124,6 +92,7 @@ public class SeriesScreen extends Activity {
         TextView emailTextView = (TextView) findViewById(R.id.email_text_view);
         emailTextView.setText(email);
     }
+
         /**
          * it pop up a new activity that has a form to add exercise to the serie you are looking
          * @param view
@@ -133,8 +102,12 @@ public class SeriesScreen extends Activity {
         final int result = 1;
         AddSerieScreen.putExtra("username", email);
         startActivityForResult(AddSerieScreen, result);
-//        this.finish();
     }
+
+    /**
+     * given an email, delete all the records related to this email
+     * @param view
+     */
 
     public void deleteAccount(View view) {
         sqLiteDatabase.delete("login", "email = ?", new String[]{email});

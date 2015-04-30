@@ -14,17 +14,12 @@ import java.util.List;
  */
 public class SeriesQuery {
 
-    HashMap<String, ArrayList<String>> seriesName = new HashMap<String, ArrayList<String>>();
-
     /**
-     * Mock class to simulate the search for series
+     * do a select in the database and return the series given a email
+     * @param email
+     * @param sqLiteDatabase database being queried
+     * @return list of String representing the name of each series
      */
-    public SeriesQuery() {
-        seriesName.put("a@b", new ArrayList<String>(Arrays.asList("serie A", "serie B", "serie C")));
-        seriesName.put("c@d", new ArrayList<String>(Arrays.asList("serie D", "serie E", "serie F")));
-        seriesName.put("e@f", new ArrayList<String>());
-        seriesName.put("a@c", new ArrayList<String>());
-    }
 
     public static List<String> getSeriesNames(String email, SQLiteDatabase sqLiteDatabase){
         ArrayList<String> stringArrayList = new ArrayList<String>();
@@ -32,14 +27,7 @@ public class SeriesQuery {
         while(cursor.moveToNext()){
             stringArrayList.add(cursor.getString(0));
         }
-//        if(!seriesName.containsKey(email))
-//            return new ArrayList<String>();
-//        else
-//            return seriesName.get(email);
         return stringArrayList;
     }
 
-    public void deleteAccount(String email){
-        seriesName.remove(email);
-    }
 }

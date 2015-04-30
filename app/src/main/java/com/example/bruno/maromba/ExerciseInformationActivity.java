@@ -59,6 +59,10 @@ public class ExerciseInformationActivity extends Activity {
         textViewWeight.setText(exercisesInformation.get(2));
     }
 
+    /**
+     * delete the serie from the exercises table
+     * @param view
+     */
 
     public void deleteExercise(View view) {
         sqLiteDatabase.delete("exercises", "email = ? AND serie = ? AND exercise = ?", new String[]{email, serie, exercise});

@@ -79,6 +79,12 @@ public class MainActivity extends ActionBarActivity {
         startActivityForResult(seriesScreen, result);
     }
 
+    /**
+     * test if email and password are valid, query the database and check if they match.
+     * In case everything is ok, goes to the next activity, otherwise show a message that something wrong occurred
+     * @param view
+     */
+
     public void signUp(View view){
         EditText editTextEmail = (EditText) findViewById(R.id.email);
         EditText editTextPassword = (EditText) findViewById(R.id.password);

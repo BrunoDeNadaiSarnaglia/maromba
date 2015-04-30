@@ -8,10 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 public class CheckEmailPasswordCombination {
 
     /**
-     * check if email and password match
+     * Query the database and check if the password and the queried password are equals
      * @param email email used to access account
      * @param password password used to access account
-     * @param sqLiteDatabase
+     * @param sqLiteDatabase database being queried
      * @return
      */
 

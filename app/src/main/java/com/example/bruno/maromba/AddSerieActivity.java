@@ -62,10 +62,6 @@ public class AddSerieActivity extends Activity {
             e.printStackTrace();
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
-//        Intent AddSerieScreen = new Intent(AddSerieActivity.this, SeriesScreen.class);
-//        final int result = 1;
-//        AddSerieScreen.putExtra("username", email);
-//        startActivityForResult(AddSerieScreen, result);
         this.finish();
     }
 }
