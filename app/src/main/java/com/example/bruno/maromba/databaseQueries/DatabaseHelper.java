@@ -23,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "login";
     private static final String TABLE_NAME_SERIES = "series";
     private static final String TABLE_NAME_EXERCISES = "exercises";
-    private static final Integer DATABASE_VERSION = 18;
+    private static final Integer DATABASE_VERSION = 21;
     private Context context = null;
 
     public DatabaseHelper(Context context) {
@@ -42,7 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //            DatabaseHelper.execSQL(query);
             sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (email VARCHAR(45) PRIMARY KEY, password VARCHAR(45));");
             sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME_SERIES + " (email VARCHAR(45) , serie VARCHAR(45), PRIMARY KEY (email, serie));");
-            sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME_EXERCISES + " (email VARCHAR(45) , serie VARCHAR(45), exercise VARCHAR(45), numTimes VARCHAR(45), numRepetition VARCHAR(45), weight VARCHAR(45)), PRIMARY KEY(email, serie, exercise);");
+            sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME_EXERCISES + " (email VARCHAR(45) , serie VARCHAR(45), exercise VARCHAR(45), numTimes VARCHAR(45), numRepetition VARCHAR(45), weight VARCHAR(45), PRIMARY KEY(email, serie, exercise));");
             Toast.makeText(context, "onCreated called", Toast.LENGTH_SHORT).show();
         } catch (Exception e){
             Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();

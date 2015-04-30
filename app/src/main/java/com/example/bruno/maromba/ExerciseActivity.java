@@ -2,6 +2,7 @@ package com.example.bruno.maromba;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.bruno.maromba.databaseQueries.DatabaseHelper;
 import com.example.bruno.maromba.databaseQueries.ExerciseQuery;
 
 import java.util.List;
@@ -22,19 +24,21 @@ public class ExerciseActivity extends Activity {
     ExerciseQuery exerciseQuery = new ExerciseQuery();
     String email;
     String serie;
+    SQLiteDatabase sqLiteDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exercise_layout);
-
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        sqLiteDatabase = databaseHelper.getWritableDatabase();
 
 
         Intent intent = getIntent();
         email = intent.getExtras().getString("username");
         serie = intent.getExtras().getString("serie");
 
-        List<String> exerciseNames = exerciseQuery.getExercises(email, serie);
+        List<String> exerciseNames = exerciseQuery.getExercises(email, serie, sqLiteDatabase);
 
         TextView emailSerieTextView = (TextView) findViewById(R.id.email_serie_text_view);
         emailSerieTextView.setText(email + " > " + serie);
@@ -78,6 +82,6 @@ public class ExerciseActivity extends Activity {
         intent.putExtra("username", email);
         intent.putExtra("serie", serie);
         startActivityForResult(intent, result);
-
+        this.finish();
     }
 }

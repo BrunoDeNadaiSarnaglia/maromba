@@ -1,5 +1,8 @@
 package com.example.bruno.maromba.databaseQueries;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -26,10 +29,16 @@ public class ExerciseQuery {
         exercisesName.put("serie F", new ArrayList<String>(Arrays.asList("chest fly", "push-up", "pull-up")));
     }
 
-    public List<String> getExercises(String email, String serie){
-        if(!exercisesName.containsKey(serie))
-            return null;
-        else
-            return exercisesName.get(serie);
+    public List<String> getExercises(String email, String serie, SQLiteDatabase sqLiteDatabase){
+        ArrayList<String> arrayList = new ArrayList<String>();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT exercise FROM exercises WHERE email = ? AND serie = ?", new String[] {email, serie});
+        while(cursor.moveToNext()){
+            arrayList.add(cursor.getString(0));
+        }
+//        if(!exercisesName.containsKey(serie))
+//            return null;
+//        else
+//            return exercisesName.get(serie);
+        return arrayList;
     }
 }
