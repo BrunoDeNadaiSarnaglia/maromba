@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.bruno.maromba.databaseQueries.DatabaseHelper;
@@ -58,4 +59,9 @@ public class ExerciseInformationActivity extends Activity {
         textViewWeight.setText(exercisesInformation.get(2));
     }
 
+
+    public void deleteExercise(View view) {
+        sqLiteDatabase.delete("exercises", "email = ? AND serie = ? AND exercise = ?", new String[]{email, serie, exercise});
+        this.finish();
+    }
 }

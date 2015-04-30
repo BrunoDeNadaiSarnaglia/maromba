@@ -67,8 +67,56 @@ public class ExerciseActivity extends Activity {
         });
     }
 
-    public void deleteSerie(View view) {
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setContentView(R.layout.exercise_layout);
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        sqLiteDatabase = databaseHelper.getWritableDatabase();
 
+
+        Intent intent = getIntent();
+        email = intent.getExtras().getString("username");
+        serie = intent.getExtras().getString("serie");
+
+        List<String> exerciseNames = exerciseQuery.getExercises(email, serie, sqLiteDatabase);
+
+        TextView emailSerieTextView = (TextView) findViewById(R.id.email_serie_text_view);
+        emailSerieTextView.setText(email + " > " + serie);
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, exerciseNames);
+
+        ListView theListView = (ListView) findViewById(R.id.exerciseListView);
+
+        theListView.setAdapter(arrayAdapter);
+        /**
+         * It will pop up a new activity showing the information
+         */
+        theListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String picked = String.valueOf(parent.getItemAtPosition(position));
+//                Toast.makeText(SeriesScreen.this, picked, Toast.LENGTH_SHORT).show();
+                Intent ExerciseScreen = new Intent(ExerciseActivity.this, ExerciseInformationActivity.class);
+                final int result = 1;
+                ExerciseScreen.putExtra("username", email);
+                ExerciseScreen.putExtra("serie", serie);
+                ExerciseScreen.putExtra("exercise", picked);
+                startActivityForResult(ExerciseScreen, result);
+            }
+        });
+    }
+
+    public void deleteSerie(View view) {
+        sqLiteDatabase.delete("series", "email = ? AND serie = ?", new String[]{email, serie});
+        sqLiteDatabase.delete("exercises", "email = ? AND serie = ?", new String[]{email, serie});
+//        Intent intent = new Intent(ExerciseActivity.this, SeriesScreen.class);
+//        final int result = 1;
+//        intent.putExtra("username", email);
+//        intent.putExtra("serie", serie);
+//        startActivityForResult(intent, result);
+        this.finish();
     }
 
 
@@ -82,6 +130,6 @@ public class ExerciseActivity extends Activity {
         intent.putExtra("username", email);
         intent.putExtra("serie", serie);
         startActivityForResult(intent, result);
-        this.finish();
+//        this.finish();
     }
 }

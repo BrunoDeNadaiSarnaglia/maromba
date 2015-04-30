@@ -77,11 +77,11 @@ public class AddExerciseActivity extends Activity {
             e.printStackTrace();
             Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
         }
-        Intent ExerciseScreen = new Intent(AddExerciseActivity.this, ExerciseActivity.class);
-        final int result = 1;
-        ExerciseScreen.putExtra("username", email);
-        ExerciseScreen.putExtra("serie", serie);
-        startActivityForResult(ExerciseScreen, result);
+//        Intent ExerciseScreen = new Intent(AddExerciseActivity.this, ExerciseActivity.class);
+//        final int result = 1;
+//        ExerciseScreen.putExtra("username", email);
+//        ExerciseScreen.putExtra("serie", serie);
+//        startActivityForResult(ExerciseScreen, result);
         this.finish();
     }
 }

@@ -24,7 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Delete Exercise"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:onClick="deleteExercise"/>
 
         <TextView
             android:layout_width="match_parent"
