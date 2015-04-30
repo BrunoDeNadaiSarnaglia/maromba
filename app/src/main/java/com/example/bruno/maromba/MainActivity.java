@@ -65,13 +65,11 @@ public class MainActivity extends ActionBarActivity {
     public void login(View view) {
         String password = String.valueOf(mPasswordView.getText());
         String email = String.valueOf(mEmailView.getText());
-        EmailAndPasswordValidator emailAndPasswordValidator = new EmailAndPasswordValidator();
-        if(!emailAndPasswordValidator.check(email, password)){
+        if(!EmailAndPasswordValidator.check(email, password)){
             Toast.makeText(MainActivity.this, "Invalid email or password", Toast.LENGTH_SHORT).show();
             return;
         }
-        CheckEmailPasswordCombination checkEmailPasswordCombination = new CheckEmailPasswordCombination();
-        if(!checkEmailPasswordCombination.valid(email, password)){
+        if(!CheckEmailPasswordCombination.valid(email, password, sqLiteDatabase)){
             Toast.makeText(MainActivity.this, "Login attempt failed", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -94,6 +92,13 @@ public class MainActivity extends ActionBarActivity {
         contentValues.put("email", email);
         contentValues.put("password", password);
         Long id = sqLiteDatabase.insert("login", null, contentValues);
-        Toast.makeText(this, id.toString(), Toast.LENGTH_LONG).show();
+        if(id == -1){
+            Toast.makeText(this, "Email already registered", Toast.LENGTH_SHORT).show();
+        } else{
+            Intent seriesScreen = new Intent(this, SeriesScreen.class);
+            final int result = 1;
+            seriesScreen.putExtra("username", email);
+            startActivityForResult(seriesScreen, result);
+        }
     }
 }

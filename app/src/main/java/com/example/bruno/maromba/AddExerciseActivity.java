@@ -3,6 +3,7 @@ package com.example.bruno.maromba;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.bruno.maromba.databaseQueries.DatabaseHelper;
+import com.example.bruno.maromba.databaseQueries.SerieInSeriesTable;
 
 import java.util.concurrent.TimeUnit;
 
@@ -51,6 +53,13 @@ public class AddExerciseActivity extends Activity {
         String repeat = editText.getText().toString();
         String times = editText1.getText().toString();
         String weight = editText2.getText().toString();
+        if(name.length() == 0 || repeat.length() == 0 || times.length() == 0 || weight.length() == 0){
+            Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT);
+            return;
+        }
+        if(!SerieInSeriesTable.query(email, serie, sqLiteDatabase)){
+            Toast.makeText(this, "Serie not in the database", Toast.LENGTH_SHORT);
+        }
         ContentValues contentValues = new ContentValues();
         contentValues.put("serie", serie);
         contentValues.put("email", email);

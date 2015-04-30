@@ -1,5 +1,9 @@
 package com.example.bruno.maromba.databaseQueries;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.widget.ArrayAdapter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,13 +22,21 @@ public class SeriesQuery {
     public SeriesQuery() {
         seriesName.put("a@b", new ArrayList<String>(Arrays.asList("serie A", "serie B", "serie C")));
         seriesName.put("c@d", new ArrayList<String>(Arrays.asList("serie D", "serie E", "serie F")));
+        seriesName.put("e@f", new ArrayList<String>());
+        seriesName.put("a@c", new ArrayList<String>());
     }
 
-    public List<String> getSeriesNames(String email){
-        if(!seriesName.containsKey(email))
-            return null;
-        else
-            return seriesName.get(email);
+    public static List<String> getSeriesNames(String email, SQLiteDatabase sqLiteDatabase){
+        ArrayList<String> stringArrayList = new ArrayList<String>();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT serie FROM series WHERE email = ?", new String[] {email});
+        while(cursor.moveToNext()){
+            stringArrayList.add(cursor.getString(0));
+        }
+//        if(!seriesName.containsKey(email))
+//            return new ArrayList<String>();
+//        else
+//            return seriesName.get(email);
+        return stringArrayList;
     }
 
     public void deleteAccount(String email){

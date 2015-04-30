@@ -23,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "login";
     private static final String TABLE_NAME_SERIES = "series";
     private static final String TABLE_NAME_EXERCISES = "exercises";
-    private static final Integer DATABASE_VERSION = 17;
+    private static final Integer DATABASE_VERSION = 18;
     private Context context = null;
 
     public DatabaseHelper(Context context) {

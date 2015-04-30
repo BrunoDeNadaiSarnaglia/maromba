@@ -2,6 +2,7 @@ package com.example.bruno.maromba;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bruno.maromba.databaseQueries.DatabaseHelper;
 import com.example.bruno.maromba.databaseQueries.SeriesQuery;
 
 import java.util.List;
@@ -27,7 +29,7 @@ public class SeriesScreen extends Activity {
 
     SeriesQuery seriesQuery = new SeriesQuery();
     String email;
-
+    SQLiteDatabase sqLiteDatabase;
 
     /**
      * Load de series based on the email and create a list view to access each exercise information
@@ -37,13 +39,14 @@ public class SeriesScreen extends Activity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.series_layout);
-
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        sqLiteDatabase = databaseHelper.getWritableDatabase();
 
         //load data from the previous activity
         Intent intent = getIntent();
         email = intent.getExtras().getString("username");
 
-        List<String> seriesNames = seriesQuery.getSeriesNames(email);
+        List<String> seriesNames = seriesQuery.getSeriesNames(email, sqLiteDatabase);
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, seriesNames);
 
@@ -86,5 +89,6 @@ public class SeriesScreen extends Activity {
         final int result = 1;
         AddSerieScreen.putExtra("username", email);
         startActivityForResult(AddSerieScreen, result);
+        this.finish();
     }
 }
